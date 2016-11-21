@@ -1,0 +1,20 @@
+#!/bin/bash
+
+
+E_BADARGS=65
+MYSQL=`which mysql`
+
+DBname="gpp_$1"
+
+
+
+Q1="CREATE DATABASE IF NOT EXISTS $DBname;"
+Q2="GRANT ALL PRIVILEGES ON $DBname.* TO 'gpp_user'@'%';"
+Q3="FLUSH PRIVILEGES;"
+SQL="${Q1}"
+echo $Q1
+echo $Q2
+mysql -u root -h10.179.3.203 -pQdE8CpHx7JC48d -e "$SQL"
+echo "DB Created"
+mysql -u root -h10.179.3.203 -pQdE8CpHx7JC48d $DBname < afterprofileinst.sql;
+echo "Data Import Completed"
