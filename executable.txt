@@ -1,0 +1,33 @@
+#!/bin/bash
+
+
+E_BADARGS=65
+MYSQL=`which mysql`
+
+DBname="gpp_$1"
+
+
+echo "show databases like '$DBname';" | mysql -u root -h10.179.3.203 -pQdE8CpHx7JC48d > db.txt
+
+ if grep -q $DBname "db.txt";
+ then
+ echo "Already exist"
+
+echo "./create_db_back.sh | grep -q 'error'" > err
+if [ $? == 0 ]; then
+   echo "matched"
+
+
+ exit 1
+
+else
+   echo "Creating db"
+echo "CREATE DATABASE IF NOT EXISTS $DBname;" | mysql -u root -h10.179.3.203 -pQdE8CpHx7JC48d
+echo "$DBname"
+ fi
+
+
+
+# if grep -q SomeString "$File"; then
+ #  Some Actions
+# fi
