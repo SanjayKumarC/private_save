@@ -13,9 +13,9 @@ echo "show databases like '$DBname';" | mysql -u root -h10.179.3.203 -pQdE8CpHx7
  then
  echo "Already exist"
 
-echo "./create_db_back.sh | grep -q 'error'" > err
-if [ $? == 0 ]; then
-   echo "matched"
+#echo "./create_db_back.sh | grep -q 'error'" > err
+#if [ $? == 0 ]; then
+#   echo "matched"
 
 
  exit 1
@@ -26,8 +26,88 @@ echo "CREATE DATABASE IF NOT EXISTS $DBname;" | mysql -u root -h10.179.3.203 -pQ
 echo "$DBname"
  fi
 
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+#!/bin/bash
 
 
-# if grep -q SomeString "$File"; then
- #  Some Actions
-# fi
+E_BADARGS=65
+MYSQL=`which mysql`
+
+DBname="gpp_$1"
+
+
+echo "show databases like '$DBname';" | mysql -u root -h10.179.3.203 -pQdE8CpHx7JC48d > db.txt 2>&1
+
+if
+ grep -q "ERROR" db.txt;
+   then
+   echo "error"
+   exit 1
+else
+if
+ grep -q "$DBname" db.txt;
+ then
+ echo "$DBname already exist"
+ exit 1
+
+#else
+#if  grep -q "error" db.txt ;
+# then
+#    echo "Error"
+
+
+#else if
+# grep -q $db.txt "db.txt"; then
+#   echo "error"
+
+
+else
+echo "CREATE DATABASE IF NOT EXISTS $DBname;" | mysql -u root -h10.179.3.203 -pQdE8CpHx7JC48d
+echo "Creating db"
+echo "$DBname"
+  fi
+fi
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+
+#!/bin/bash
+
+
+E_BADARGS=65
+MYSQL=`which mysql`
+
+DBname="gpp_$1"
+
+
+echo "show databases like '$DBname';" | mysql -u root -h10.179.3.203 -pQdE8CpHx7JC48d > db.txt 2>&1
+
+if
+ grep -q "ERROR" db.txt;
+   then
+   echo "error"
+   exit 1
+else
+if
+ grep -q "$DBname" db.txt;
+ then
+ echo "$DBname already exist"
+ exit 1
+
+else
+echo "CREATE DATABASE IF NOT EXISTS $DBname;" | mysql -u root -h10.179.3.203 -pQdE8CpHx7JC48d > db.txt 2>&1
+
+if
+grep -q "ERROR" db.txt;
+then
+echo "Error"
+exit 1
+
+else
+echo "Creating db"
+echo "$DBname"
+echo "$DBname created"
+mysql -u root -h10.179.3.203 -pQdE8CpHx7JC48d $DBname < afterprofileinst.sql;
+  fi
+fi
+fi
