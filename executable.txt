@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+#ops@95.138.138.143
 E_BADARGS=65
 MYSQL=`which mysql`
 
